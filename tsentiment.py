@@ -12,15 +12,17 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
-public_tweets = api.search('Trump')
+target = input('What would you like to analyze?')
+
+public_tweets = api.search(target)
 
 f = open('results.csv', 'w') 
 
 for tweet in public_tweets:
     analysis = TextBlob(tweet.text)
-    if analysis.sentiment.polarity > 0.21:
+    if analysis.sentiment.polarity > 0.2:
         print(tweet.text,', positive', file=f)
-    elif analysis.sentiment.polarity > -0.2:
+    elif analysis.sentiment.polarity > 0:
         print(tweet.text,', neutral', file=f)
     else:
         print(tweet.text,', negative', file=f)
